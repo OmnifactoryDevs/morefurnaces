@@ -229,28 +229,6 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
     }
 
     @Override
-    public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
-
-        IBlockState state = world.getBlockState(pos);
-        TileEntity te = world.getTileEntity(pos);
-        if(te != null && te instanceof TileEntityIronFurnace) {
-            if(axis == EnumFacing.UP || axis == EnumFacing.DOWN) {
-                return false;
-            }
-            else {
-                if(world.isRemote) {
-                    ((TileEntityIronFurnace) te).setFacing((byte) axis.ordinal());
-                    world.notifyBlockUpdate(pos, state, state, 3);
-
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
     {
         return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
