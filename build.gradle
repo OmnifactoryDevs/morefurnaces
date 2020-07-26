@@ -22,6 +22,8 @@ minecraft {
     runDir = "run"
     mappings = "snapshot_20171003"
     makeObfSourceJar = false
+
+    replace "GRADLE:VERSION", project.version
 }
 
 repositories {

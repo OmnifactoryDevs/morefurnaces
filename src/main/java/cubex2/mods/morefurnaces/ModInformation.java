@@ -4,5 +4,5 @@ public class ModInformation
 {
     public static final String ID = "morefurnaces";
     public static final String NAME = "More Furnaces: Omnifactory Edition";
-    public static final String VERSION = "1.10.7";
+    public static final String VERSION = "GRADLE:VERSION";
 }
