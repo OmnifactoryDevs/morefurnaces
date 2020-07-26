@@ -1,10 +1,10 @@
-IRON_furnace.name=Iron Furnace
-GOLD_furnace.name=Gold Furnace
-DIAMOND_furnace.name=Diamond Furnace
-OBSIDIAN_furnace.name=Obsidian Furnace
-NETHERRACK_furnace.name=Netherrack Furnace
-COPPER_furnace.name=Copper Furnace
-SILVER_furnace.name=Silver Furnace
+tile.iron_furnace.name=Iron Furnace
+tile.gold_furnace.name=Gold Furnace
+tile.diamond_furnace.name=Diamond Furnace
+tile.obsidian_furnace.name=Obsidian Furnace
+tile.netherrack_furnace.name=Netherrack Furnace
+tile.copper_furnace.name=Copper Furnace
+tile.silver_furnace.name=Silver Furnace
 item.morefurnacesupgrade.stone_to_iron.name=Furnace Upgrade: Stone To Iron
 item.morefurnacesupgrade.stone_to_netherrack.name=Furnace Upgrade: Stone To Netherrack
 item.morefurnacesupgrade.iron_to_gold.name=Furnace Upgrade: Iron To Gold
