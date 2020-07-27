@@ -1,8 +1,8 @@
-IRON_furnace.name=Железная печка
-GOLD_furnace.name=Золотая печка
-DIAMOND_furnace.name=Алмазная печка
-OBSIDIAN_furnace.name=Обсидиановая печка
-NETHERRACK_furnace.name=Адская печка
+tile.iron_furnace.name=Железная печка
+tile.gold_furnace.name=Золотая печка
+tile.diamond_furnace.name=Алмазная печка
+tile.obsidian_furnace.name=Обсидиановая печка
+tile.netherrack_furnace.name=Адская печка
 item.morefurnacesupgrade.stone_to_iron.name=Улучшение печки: каменная -> железная
 item.morefurnacesupgrade.stone_to_netherrack.name=Улучшение печки: каменная -> адская
 item.morefurnacesupgrade.iron_to_gold.name=Улучшение печки: железная -> золотая

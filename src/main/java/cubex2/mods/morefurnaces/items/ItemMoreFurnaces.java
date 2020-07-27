@@ -28,6 +28,6 @@ public class ItemMoreFurnaces extends ItemBlock
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return FurnaceType.values()[stack.getItemDamage()].name() + "_furnace";
+        return "tile." + FurnaceType.values()[stack.getItemDamage()].toString().toLowerCase() + "_furnace";
     }
 }
