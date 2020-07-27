@@ -236,6 +236,12 @@ task deployCurseForge {
                 displayName "${project_fancy_name} ${project.version}"
             }
 
+            if (project_curseforge_dependencies) {
+                def data = new JsonSlurper().parseText(project_curseforge_dependencies)
+
+                root << [relations: [ projects: data ]]
+            }
+
             return it.toString()
         }
 
