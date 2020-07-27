@@ -1,6 +1,6 @@
 More Furnaces: Omnifactory Edition
 ================
-[![Curseforge](http://cf.way2muchnoise.eu/full_morefurnaces-omnifactory-edition_downloads.svg)](https://minecraft.curseforge.com/projects/morefurnaces-omnifactory-edition) [![Curseforge](http://cf.way2muchnoise.eu/versions/For%20MC_morefurnaces-omnifactory-edition_all.svg)](https://minecraft.curseforge.com/projects/morefurnaces-omnifactory-edition)
+[![Curseforge](http://cf.way2muchnoise.eu/full_391401_downloads.svg)](https://minecraft.curseforge.com/projects/morefurnaces-omnifactory-edition) [![Curseforge](http://cf.way2muchnoise.eu/versions/For%20MC_391401_all.svg)](https://minecraft.curseforge.com/projects/morefurnaces-omnifactory-edition)
 
 A continuation of MoreFurnaces by Cubex2, maintained by the Omnifactory Dev team.
 
