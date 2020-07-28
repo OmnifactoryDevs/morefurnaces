@@ -145,10 +145,19 @@ task generateChangelog {
             , "--date=format:%d %b %Y"
             , "--pretty=%s - **%an** (%ad)"
             , "${lastTag}..HEAD"
-        ]))
+        ].plus(
+            /*
+                Collect relevant directories only, them being:
+                * ./src/main/java
+                * ./src/main/resources
+             */
+            sourceSets.main.java.srcDirs
+                .plus(sourceSets.main.resources.srcDirs)
+                .collect { [ "--", it ] }
+        ).flatten()))
         
         if (changelog) {
-            changelog = "Changes since ${lastTag}:\n${("\n" + changelog).replaceAll("\n", "\n• ")}"
+            changelog = "Changes since ${lastTag}:\n${("\n" + changelog).replaceAll("\n", "\n* ")}"
         }
 
         def f = new File("build/tmp/changelog.md")
@@ -224,6 +233,7 @@ task deployCurseForge {
             def log = new File("build/tmp/changelog.md")
                 .getText("UTF-8")
                 .replaceAll("\n", "  \n")
+                .replaceAll("\n\\*", "\n•")
             
             def root = it {
                 changelog log
