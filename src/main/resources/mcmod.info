@@ -1,13 +1,20 @@
 [
-{
-  "modid": "morefurnaces",
-  "name": "More Furnaces: Omnifactory Edition",
-  "description": "More Furnaces adds 7 new furnaces made of iron, copper, silver, gold, diamond, obsidian and netherrack to the game. Each has different abilities like more slots, higher smelting speed or dual smelting.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "https://www.curseforge.com/minecraft/mc-mods/morefurnaces-omnifactory-edition",
-  "authorList": ["CubeX2","ALongStringOfNumbers","Eutropium","Exa4096","notmywing"],
-  "credits": "CubeX2 for the original mod, Omnifactory Developers for subsequent maintenance.",
-  "logoFile": "assets/morefurnaces/textures/icon.png"
-}
+  {
+    "modid": "morefurnaces",
+    "name": "More Furnaces: Omnifactory Edition",
+    "description": "More Furnaces adds 7 new furnaces made of iron, copper, silver, gold, diamond, obsidian and netherrack to the game. Each has different abilities like more slots, higher smelting speed or dual smelting.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://www.curseforge.com/minecraft/mc-mods/morefurnaces-omnifactory-edition",
+    "authorList": [
+      "CubeX2",
+      "ALongStringOfNumbers",
+      "Eutropium",
+      "Exa4096",
+      "notmywing",
+      "dan"
+    ],
+    "credits": "CubeX2 for the original mod, Omnifactory Developers for subsequent maintenance.",
+    "logoFile": "assets/morefurnaces/textures/icon.png"
+  }
 ]
