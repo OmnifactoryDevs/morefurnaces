@@ -19,14 +19,17 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.IOException;
 
-@Mod(modid = ModInformation.ID,
-     name = ModInformation.NAME,
-     version = ModInformation.VERSION,
-     acceptedMinecraftVersions = "[1.12,)",
-     dependencies = "required-after:cxlibrary@[1.5.0,)",
-     useMetadata = true)
-public class MoreFurnaces
-{
+@Mod(modid = MoreFurnaces.MODID,
+        name = MoreFurnaces.NAME,
+        version = MoreFurnaces.VERSION,
+        acceptedMinecraftVersions = "[1.12,)",
+        useMetadata = true)
+public class MoreFurnaces {
+
+    public static final String MODID = "morefurnaces";
+    public static final String NAME = "GRADLE:MODNAME";
+    public static final String VERSION = "GRADLE:VERSION";
+
     public static BlockMoreFurnaces blockFurnaces;
     private static ItemMoreFurnaces itemBlock;
     public static ItemUpgrade upgrade;
@@ -34,17 +37,15 @@ public class MoreFurnaces
     @SidedProxy(clientSide = "cubex2.mods.morefurnaces.proxies.ClientProxy", serverSide = "cubex2.mods.morefurnaces.proxies.CommonProxy")
     public static CommonProxy proxy;
 
-    @Mod.Instance(ModInformation.ID)
+    @Mod.Instance(MODID)
     public static MoreFurnaces instance;
 
-    public MoreFurnaces()
-    {
+    public MoreFurnaces() {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) throws IOException
-    {
+    public void preInit(FMLPreInitializationEvent event) {
         Config.init(event.getSuggestedConfigurationFile());
 
         blockFurnaces = new BlockMoreFurnaces();
@@ -53,28 +54,23 @@ public class MoreFurnaces
     }
 
     @SubscribeEvent
-    public void registerBlocks(RegistryEvent.Register<Block> event)
-    {
+    public void registerBlocks(RegistryEvent.Register<Block> event) {
         event.getRegistry().register(blockFurnaces);
     }
 
     @SubscribeEvent
-    public void registerItems(RegistryEvent.Register<Item> event)
-    {
+    public void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(upgrade, itemBlock);
     }
 
     @SubscribeEvent
-    public void registerModels(ModelRegistryEvent event)
-    {
+    public void registerModels(ModelRegistryEvent event) {
         proxy.registerRenderInformation();
     }
 
     @Mod.EventHandler
-    public void load(FMLInitializationEvent evt)
-    {
-        for (FurnaceType typ : FurnaceType.values())
-        {
+    public void load(FMLInitializationEvent evt) {
+        for (FurnaceType typ : FurnaceType.values()) {
             GameRegistry.registerTileEntity(typ.clazz, "CubeX2 " + typ.friendlyName);
         }
 

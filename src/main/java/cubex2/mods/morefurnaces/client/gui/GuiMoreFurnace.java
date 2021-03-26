@@ -15,8 +15,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.util.Rectangle;
 
-public class GuiMoreFurnace extends ScreenCenter
-{
+public class GuiMoreFurnace extends ScreenCenter {
     static ResourceLocation DATA_IRON = new ResourceLocation("morefurnaces", "gui/iron.json");
     static ResourceLocation DATA_GOLD = new ResourceLocation("morefurnaces", "gui/gold.json");
     static ResourceLocation DATA_DIAMOND = new ResourceLocation("morefurnaces", "gui/diamond.json");
@@ -25,8 +24,7 @@ public class GuiMoreFurnace extends ScreenCenter
     static ResourceLocation DATA_COPPER = new ResourceLocation("morefurnaces", "gui/copper.json");
     static ResourceLocation DATA_SILVER = new ResourceLocation("morefurnaces", "gui/silver.json");
 
-    public enum GUI
-    {
+    public enum GUI {
         IRON(Textures.IRON, FurnaceType.IRON, DATA_IRON),
         GOLD(Textures.GOLD, FurnaceType.GOLD, DATA_GOLD),
         DIAMOND(Textures.DIAMOND, FurnaceType.DIAMOND, DATA_DIAMOND),
@@ -39,20 +37,17 @@ public class GuiMoreFurnace extends ScreenCenter
         private FurnaceType mainType;
         private ResourceLocation dataLocation;
 
-        GUI(GuiTexture texture, FurnaceType mainType, ResourceLocation dataLocation)
-        {
+        GUI(GuiTexture texture, FurnaceType mainType, ResourceLocation dataLocation) {
             this.texture = texture;
             this.mainType = mainType;
             this.dataLocation = dataLocation;
         }
 
-        protected Container makeContainer(InventoryPlayer player, TileEntityIronFurnace furnace)
-        {
+        protected Container makeContainer(InventoryPlayer player, TileEntityIronFurnace furnace) {
             return new ContainerIronFurnace(player, furnace, mainType);
         }
 
-        public static GuiScreen buildGui(InventoryPlayer invPlayer, TileEntityIronFurnace invFurnace)
-        {
+        public static GuiScreen buildGui(InventoryPlayer invPlayer, TileEntityIronFurnace invFurnace) {
             GUI type = values()[invFurnace.getType().ordinal()];
             Container container = type.makeContainer(invPlayer, invFurnace);
             GuiContainerCX gui = new GuiContainerCX(new GuiMoreFurnace(type, invFurnace), container);
@@ -67,26 +62,22 @@ public class GuiMoreFurnace extends ScreenCenter
     private final HorizontalProgressBar[] cookBars;
     private final VerticalProgressBar fuelBar;
 
-    public GuiMoreFurnace(GUI type, TileEntityIronFurnace invFurnace)
-    {
+    public GuiMoreFurnace(GUI type, TileEntityIronFurnace invFurnace) {
         super(type.dataLocation);
         furnace = invFurnace;
 
         window.pictureBox("bg", type.texture, "bg").add();
 
         cookBars = new HorizontalProgressBar[type.mainType.parallelSmelting];
-        for (int i = 0; i < cookBars.length; i++)
-        {
+        for (int i = 0; i < cookBars.length; i++) {
             cookBars[i] = window.horizontalBar("cook" + i, type.texture, "cook").add();
         }
         fuelBar = window.verticalBar("fuel", type.texture, "fuel").add();
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float partialTicks)
-    {
-        for (int i = 0; i < cookBars.length; i++)
-        {
+    public void draw(int mouseX, int mouseY, float partialTicks) {
+        for (int i = 0; i < cookBars.length; i++) {
             cookBars[i].setProgress(furnace.getCookProgress(i));
         }
         fuelBar.setProgress(-1f + furnace.getBurnTimeRemaining());
@@ -95,8 +86,7 @@ public class GuiMoreFurnace extends ScreenCenter
     }
 
     @Override
-    public boolean doesPauseGame()
-    {
+    public boolean doesPauseGame() {
         return false;
     }
 }

@@ -35,8 +35,7 @@ import java.util.Arrays;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class TileEntityIronFurnace extends TileEntity implements ITickable
-{
+public class TileEntityIronFurnace extends TileEntity implements ITickable {
     public int[] furnaceCookTime;
     public int furnaceBurnTime = 0;
     public int currentItemBurnTime = 0;
@@ -52,13 +51,11 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
     private final ItemHandlerFurnace itemHandler;
 
     @SuppressWarnings("unused")
-    public TileEntityIronFurnace()
-    {
+    public TileEntityIronFurnace() {
         this(FurnaceType.IRON);
     }
 
-    protected TileEntityIronFurnace(FurnaceType type)
-    {
+    protected TileEntityIronFurnace(FurnaceType type) {
         super();
         this.type = type;
         furnaceCookTime = new int[type.parallelSmelting];
@@ -66,13 +63,11 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
         itemHandler = new ItemHandlerFurnace(this);
     }
 
-    public ItemHandlerFurnace getItemHandler()
-    {
+    public ItemHandlerFurnace getItemHandler() {
         return itemHandler;
     }
 
-    public void copyStateFrom(TileEntityIronFurnace furnace)
-    {
+    public void copyStateFrom(TileEntityIronFurnace furnace) {
         int minParallel = Math.min(type.parallelSmelting, furnace.type.parallelSmelting);
 
         System.arraycopy(furnace.furnaceCookTime, 0, furnaceCookTime, 0, minParallel);
@@ -84,8 +79,7 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
         world.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 2, (byte) (isActive ? 1 : 0));
     }
 
-    public void copyStateFrom(TileEntityFurnace furnace, byte facing)
-    {
+    public void copyStateFrom(TileEntityFurnace furnace, byte facing) {
         furnaceCookTime[0] = furnace.getField(2);
         furnaceBurnTime = furnace.getField(0);
         currentItemBurnTime = furnace.getField(1);
@@ -94,46 +88,38 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
         world.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 2, (byte) (isActive ? 1 : 0));
     }
 
-    public int getSpeed()
-    {
+    public int getSpeed() {
         return Config.getFurnaceSpeed(type);
     }
 
-    public float getConsumptionRate()
-    {
+    public float getConsumptionRate() {
         return Config.getConsumptionRate(type);
     }
 
-    public byte getFacing()
-    {
+    public byte getFacing() {
         return facing;
     }
 
-    public void setFacing(byte value)
-    {
+    public void setFacing(byte value) {
         facing = value;
         world.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 1, facing & 0xFF);
     }
 
-    public boolean isActive()
-    {
+    public boolean isActive() {
         return isActive;
     }
 
-    public FurnaceType getType()
-    {
+    public FurnaceType getType() {
         return type;
     }
 
     @Override
-    public ITextComponent getDisplayName()
-    {
+    public ITextComponent getDisplayName() {
         return null;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTagCompound)
-    {
+    public void readFromNBT(NBTTagCompound nbtTagCompound) {
         super.readFromNBT(nbtTagCompound);
         itemHandler.deserializeNBT(nbtTagCompound);
 
@@ -142,8 +128,7 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
         currentItemBurnTime = getBurnTime(itemHandler.getStackInSlot(type.getFirstFuelSlot()));
         NBTTagList cookList = nbtTagCompound.getTagList("CookTimes", 10);
         furnaceCookTime = new int[type.parallelSmelting];
-        for (int i = 0; i < cookList.tagCount(); ++i)
-        {
+        for (int i = 0; i < cookList.tagCount(); ++i) {
             NBTTagCompound tag = cookList.getCompoundTagAt(i);
             byte cookId = tag.getByte("Id");
             int cookTime = tag.getInteger("Time");
@@ -152,21 +137,18 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
         }
         facing = nbtTagCompound.getByte("facing");
         isActive = nbtTagCompound.getBoolean("isActive");
-        if (world != null)
-        {
+        if (world != null) {
             IBlockState state = world.getBlockState(pos);
             world.notifyBlockUpdate(pos, state, state, 3);
         }
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound)
-    {
+    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
         super.writeToNBT(nbtTagCompound);
         nbtTagCompound.setShort("BurnTime", (short) furnaceBurnTime);
         NBTTagList cookList = new NBTTagList();
-        for (int i = 0; i < furnaceCookTime.length; i++)
-        {
+        for (int i = 0; i < furnaceCookTime.length; i++) {
             NBTTagCompound tag = new NBTTagCompound();
             tag.setByte("Id", (byte) i);
             tag.setInteger("Time", furnaceCookTime[i]);
@@ -185,32 +167,26 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
         return nbtTagCompound;
     }
 
-    public float getCookProgress(int id)
-    {
+    public float getCookProgress(int id) {
         return furnaceCookTime[id] / (float) getSpeed();
     }
 
     @SideOnly(Side.CLIENT)
-    public float getBurnTimeRemaining()
-    {
-        if (currentItemBurnTime == 0)
-        {
+    public float getBurnTimeRemaining() {
+        if (currentItemBurnTime == 0) {
             currentItemBurnTime = getSpeed();
         }
 
         return furnaceBurnTime / (float) currentItemBurnTime;
     }
 
-    public boolean isBurning()
-    {
+    public boolean isBurning() {
         return furnaceBurnTime > 0;
     }
 
     @Override
-    public void update()
-    {
-        if (++ticksSinceSync % 20 * 4 == 0)
-        {
+    public void update() {
+        if (++ticksSinceSync % 20 * 4 == 0) {
             world.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 1, facing & 0xFF);
             world.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 2, (byte) (isActive ? 1 : 0));
         }
@@ -218,36 +194,30 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
         boolean wasBurning = this.isBurning();
         boolean dirty = false;
 
-        if (this.isBurning() && type.fuelSlots > 0)
-        {
+        if (this.isBurning() && type.fuelSlots > 0) {
             --furnaceBurnTime;
         }
 
-        if (updateLight && world != null)
-        {
+        if (updateLight && world != null) {
             world.checkLightFor(EnumSkyBlock.SKY, pos);
             updateLight = false;
         }
 
-        if (!world.isRemote)
-        {
+        if (!world.isRemote) {
             moveStacks();
 
-            if (furnaceBurnTime == 0 && canSmelt() && type.fuelSlots > 0)
-            {
+            if (furnaceBurnTime == 0 && canSmelt() && type.fuelSlots > 0) {
                 dirty |= consumeFuel();
             }
 
-            for (int i = 0; i < type.parallelSmelting; i++)
-            {
+            for (int i = 0; i < type.parallelSmelting; i++) {
                 dirty |= progressCooking(i);
             }
 
             dirty |= updateBlockActiveState(wasBurning);
         }
 
-        if (dirty)
-        {
+        if (dirty) {
             this.markDirty();
         }
     }
@@ -255,12 +225,9 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
     /**
      * Checks if any smelt line can smelt an item.
      */
-    private boolean canSmelt()
-    {
-        for (int i = 0; i < type.parallelSmelting; i++)
-        {
-            if (canSmelt(i))
-            {
+    private boolean canSmelt() {
+        for (int i = 0; i < type.parallelSmelting; i++) {
+            if (canSmelt(i)) {
                 return true;
             }
         }
@@ -274,21 +241,17 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
      * @param wasBurning Whether the furnace was burning in the previous tick.
      * @return True if the state has changed, false if not.
      */
-    private boolean updateBlockActiveState(boolean wasBurning)
-    {
+    private boolean updateBlockActiveState(boolean wasBurning) {
         boolean dirty = false;
 
-        if (wasBurning != this.isBurning() && type.fuelSlots > 0)
-        {
+        if (wasBurning != this.isBurning() && type.fuelSlots > 0) {
             dirty = true;
             isActive = this.isBurning();
 
             IBlockState state = world.getBlockState(pos);
             world.notifyBlockUpdate(pos, state, state, 3);
-        } else if (type.fuelSlots == 0)
-        {
-            if (isActive != isBurning())
-            {
+        } else if (type.fuelSlots == 0) {
+            if (isActive != isBurning()) {
                 currentItemBurnTime = furnaceBurnTime = 3600;
                 dirty = true;
                 isActive = this.isBurning();
@@ -306,21 +269,17 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
      *
      * @return True if item has been smelted, false if not.
      */
-    private boolean progressCooking(int id)
-    {
-        if (this.isBurning() && this.canSmelt(id))
-        {
+    private boolean progressCooking(int id) {
+        if (this.isBurning() && this.canSmelt(id)) {
             ++furnaceCookTime[id];
 
-            if (furnaceCookTime[id] >= getSpeed())
-            {
+            if (furnaceCookTime[id] >= getSpeed()) {
                 furnaceCookTime[id] = 0;
                 this.smeltItem(id);
                 return true;
 
             }
-        } else
-        {
+        } else {
             furnaceCookTime[id] = 0;
         }
 
@@ -332,20 +291,16 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
      *
      * @return True if the fuel has been consumed, false if not.
      */
-    private boolean consumeFuel()
-    {
+    private boolean consumeFuel() {
         int slot = type.getFirstFuelSlot();
         ItemStack stack = itemHandler.getStackInSlot(slot);
         currentItemBurnTime = furnaceBurnTime = getBurnTime(stack);
-        if (this.isBurning())
-        {
-            if (!stack.isEmpty())
-            {
+        if (this.isBurning()) {
+            if (!stack.isEmpty()) {
                 Item item = stack.getItem();
                 stack.shrink(1);
 
-                if (stack.isEmpty())
-                {
+                if (stack.isEmpty()) {
                     itemHandler.setStackInSlot(slot, item.getContainerItem(stack));
                 }
             }
@@ -356,33 +311,27 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
         return false;
     }
 
-    private int getBurnTime(ItemStack stack)
-    {
+    private int getBurnTime(ItemStack stack) {
         return (int) (TileEntityFurnace.getItemBurnTime(stack) / getConsumptionRate());
     }
 
-    private void moveStacks()
-    {
+    private void moveStacks() {
         itemHandler.moveInputStacks();
 
-        for (int id = 0; id < type.parallelSmelting; id++)
-        {
+        for (int id = 0; id < type.parallelSmelting; id++) {
             ItemHandlerMoveStacks outputHandler = itemHandler.getOutputHandlers()[id];
 
             ItemStack result = ItemStack.EMPTY;
             ItemStack input = itemHandler.getStackInSlot(type.getFirstInputSlot(id));
-            if (!input.isEmpty())
-            {
+            if (!input.isEmpty()) {
                 result = FurnaceRecipes.instance().getSmeltingResult(input);
             }
-            if (!result.isEmpty())
-            {
+            if (!result.isEmpty()) {
                 itemHandler.slotChecksEnabled = false;
                 ItemStack remainder = outputHandler.insertItem(0, result, true);
                 itemHandler.slotChecksEnabled = true;
 
-                if (!remainder.isEmpty())
-                {
+                if (!remainder.isEmpty()) {
                     outputHandler.moveStacks();
                 }
             }
@@ -392,15 +341,12 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
     }
 
     @Override
-    public boolean receiveClientEvent(int i, int j)
-    {
+    public boolean receiveClientEvent(int i, int j) {
         if (world != null && !world.isRemote) return true;
-        if (i == 1)
-        {
+        if (i == 1) {
             facing = (byte) j;
             return true;
-        } else if (i == 2)
-        {
+        } else if (i == 2) {
             isActive = j == 1;
             if (world != null)
                 world.checkLightFor(EnumSkyBlock.BLOCK, pos);
@@ -414,19 +360,16 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
     /**
      * Returns true if the furnace can smelt an item, i.e. has a source item, destination stack isn't full, etc.
      */
-    private boolean canSmelt(int id)
-    {
+    private boolean canSmelt(int id) {
         int inputIndex = type.getFirstInputSlot(id);
         int outputIndex = type.getFirstOutputSlot(id);
 
         ItemStack input = itemHandler.getStackInSlot(inputIndex);
         ItemStack output = itemHandler.getStackInSlot(outputIndex);
 
-        if (input.isEmpty())
-        {
+        if (input.isEmpty()) {
             return false;
-        } else
-        {
+        } else {
             ItemStack res = FurnaceRecipes.instance().getSmeltingResult(input);
             if (res.isEmpty())
                 return false;
@@ -442,10 +385,8 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
     /**
      * Turn one item from the furnace source stack into the appropriate smelted item in the furnace result stack
      */
-    private void smeltItem(int id)
-    {
-        if (this.canSmelt(id))
-        {
+    private void smeltItem(int id) {
+        if (this.canSmelt(id)) {
             int inputIndex = type.getFirstInputSlot(id);
             int outputIndex = type.getFirstOutputSlot(id);
 
@@ -453,38 +394,31 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
             ItemStack output = itemHandler.getStackInSlot(outputIndex);
             ItemStack result = FurnaceRecipes.instance().getSmeltingResult(input);
 
-            if (output.isEmpty())
-            {
+            if (output.isEmpty()) {
                 itemHandler.setStackInSlot(outputIndex, result.copy());
-            } else if (output.isItemEqual(result))
-            {
+            } else if (output.isItemEqual(result)) {
                 output.grow(result.getCount());
             }
 
-            if (input.getItem() == Item.getItemFromBlock(Blocks.SPONGE) && input.getMetadata() == 1)
-            {
+            if (input.getItem() == Item.getItemFromBlock(Blocks.SPONGE) && input.getMetadata() == 1) {
                 fillBucketInFuelSlots();
             }
 
             input.shrink(1);
 
-            if (input.isEmpty())
-            {
+            if (input.isEmpty()) {
                 itemHandler.setStackInSlot(inputIndex, ItemStack.EMPTY);
             }
         }
     }
 
-    private void fillBucketInFuelSlots()
-    {
+    private void fillBucketInFuelSlots() {
         int startIndex = type.getFirstFuelSlot();
 
-        for (int i = 0; i < type.getNumFuelSlots(); i++)
-        {
+        for (int i = 0; i < type.getNumFuelSlots(); i++) {
             ItemStack stack = itemHandler.getStackInSlot(startIndex + i);
 
-            if (!stack.isEmpty() && stack.getItem() == Items.BUCKET)
-            {
+            if (!stack.isEmpty() && stack.getItem() == Items.BUCKET) {
                 itemHandler.setStackInSlot(startIndex + i, new ItemStack(Items.WATER_BUCKET));
                 break;
             }
@@ -497,29 +431,24 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
     }
 
     @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
+    public SPacketUpdateTileEntity getUpdatePacket() {
         return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-    {
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
         readFromNBT(pkt.getNbtCompound());
     }
 
     @Override
-    public NBTTagCompound getUpdateTag()
-    {
+    public NBTTagCompound getUpdateTag() {
         return this.writeToNBT(new NBTTagCompound());
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
-    {
-        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-        {
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (facing == null)
                 return (T) itemHandler;
             else
@@ -530,8 +459,7 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
-    {
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
     }
 }
