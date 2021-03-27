@@ -36,6 +36,7 @@ public class ContainerIronFurnace extends Container {
         addPlayerSlots(invPlayer);
     }
 
+    // lets make our GUIs all extremely similar yet totally distinct :megaweary:
     private void addFurnaceSlots(InventoryPlayer inv) {
         ItemHandlerFurnace itemHandler = this.furnace.getItemHandler();
         if (type.parallelSmelting != 1) {
@@ -83,6 +84,31 @@ public class ContainerIronFurnace extends Container {
                 this.addSlotToContainer(new SlotOutput(inv.player, itemHandler, index, 138, 39));
         } else {
             // DIAMOND FURNACE
+            int index = 0;
+            for (int col = 0; col < 4; col++) {
+                for (int row = 0; row < 2; row++) {
+                    if (col == 0 && row == 1) continue; // Don't add the slot in the top-right position
+                    int x = 62 - 18 * col;
+                    int y = 35 - 18 * row;
+                    this.addSlotToContainer(new SlotItemHandler(itemHandler, index++, x, y));
+                }
+            }
+            for (int col = 0; col < 4; col++) {
+                for (int row = 0; row < 2; row++) {
+                    if (col == 0 && row == 1) continue;
+                    int x = 62 - 18 * col;
+                    int y = 71 + 18 * row;
+                    this.addSlotToContainer(new SlotFuel(itemHandler, index++, x, y));
+                }
+            }
+            this.addSlotToContainer(new SlotOutput(inv.player, itemHandler, index++, 112, 53));
+            for (int row = 0; row < 2; row++) {
+                for (int col = 0; col < 4; col++) {
+                    int x = 134 + 18 * col;
+                    int y = 26 + 18 * row;
+                    this.addSlotToContainer(new SlotOutput(inv.player, itemHandler, index++, x, y));
+                }
+            }
         }
     }
 
