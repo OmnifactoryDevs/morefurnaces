@@ -46,17 +46,10 @@ repositories {
         name = "JEI Maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
-    // maven {
-    //     name = "General Maven (needed for CCL)"
-    //     url = "https://minecraft.curseforge.com/api/maven"
-    // }
 }
 
 dependencies {
     testCompile 'junit:junit:4.5'
-
-    // deobfCompile "codechicken-lib-1-8:CodeChickenLib-1.12.2:3.2.3.358:universal"
-
     runtime "mezz.jei:jei_1.12.2:4.15.0.293"
 }
 
