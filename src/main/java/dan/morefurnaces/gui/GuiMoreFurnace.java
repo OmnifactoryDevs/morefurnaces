@@ -30,10 +30,16 @@ public class GuiMoreFurnace extends GuiContainer {
         // Cook Overlay GUI Location
         private static final int cookWidth = 24;
         private static final int cookHeight = 16;
+        private final int cookY = 13;
 
         // BG GUI Location
-        private final int bgWidth = 176;
+        private static final int bgWidth = 176;
         private final int bgHeight;
+
+        // Obsidian special case constants
+        private static final int barX = 79;
+        private static final int bar0Y = 18;
+        private static final int bar1Y = 44;
 
         GUI(ResourceLocation texture, FurnaceType mainType, int bgHeight) {
             this.texture = texture;
@@ -55,28 +61,71 @@ public class GuiMoreFurnace extends GuiContainer {
 
     private final TileEntityIronFurnace furnace;
 
-    //private final HorizontalProgressBar[] cookBars;
-    //private final VerticalProgressBar fuelBar;
     private final GUI type;
 
     public GuiMoreFurnace(GUI type, ContainerIronFurnace invFurnace) {
         super(invFurnace);
         furnace = invFurnace.getTileEntity();
         this.type = type;
-        xSize = type.bgWidth;
+        xSize = GUI.bgWidth;
         ySize = type.bgHeight;
-
-        //cookBars = new HorizontalProgressBar[type.mainType.parallelSmelting];
-        //for (int i = 0; i < cookBars.length; i++) {
-        //    cookBars[i] = window.horizontalBar("cook" + i, type.texture, "cook").add();
-        //}
-        //fuelBar = window.verticalBar("fuel", type.texture, "fuel").add();
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         mc.getTextureManager().bindTexture(type.texture);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+
+        if (furnace.isBurning()) {
+            int left, top;
+            switch(type) {
+                case IRON:
+                case COPPER:
+                case NETHERRACK:
+                    left = 57; top = 37; break;
+                case SILVER:
+                case GOLD:
+                    left = 64; top = 37; break;
+                case DIAMOND:
+                    left = 64; top = 55; break;
+                default: // Obsidian, but avoids an "uninitialized" error
+                    left = 57; top = 67; break;
+            }
+            int px = getBurnLeftScaled();
+            drawTexturedModalRect(guiLeft + left, guiTop + top + GUI.fuelHeight - px, GUI.bgWidth, GUI.fuelHeight - px, GUI.fuelWidth, px);
+        }
+        if (furnace.isActive()) {
+            if (type == GUI.OBSIDIAN) { // Need to handle 2 progress bars independently
+                int pxTop = getCookProgressScaled(0);
+                int pxBottom = getCookProgressScaled(1);
+
+                drawTexturedModalRect(guiLeft + GUI.barX, guiTop + GUI.bar0Y, GUI.bgWidth, GUI.fuelHeight, pxTop + 1, GUI.cookHeight);
+                drawTexturedModalRect(guiLeft + GUI.barX, guiTop + GUI.bar1Y, GUI.bgWidth, GUI.fuelHeight, pxBottom + 1, GUI.cookHeight);
+            } else {
+                int left, top;
+                switch (type) {
+                    case IRON:
+                    case COPPER:
+                    case NETHERRACK:
+                        left = 79; top = 35; break;
+                    case SILVER:
+                    case GOLD:
+                        left = 81; top = 35; break;
+                    default: // Diamond
+                        left = 81; top = 53; break;
+                }
+                int px = getCookProgressScaled(0);
+                drawTexturedModalRect(guiLeft + left, guiTop + top, GUI.bgWidth, GUI.fuelHeight, px + 1, GUI.cookHeight);
+            }
+        }
+    }
+
+    private int getCookProgressScaled(int id) {
+        return (int)(GUI.cookWidth * this.furnace.getCookProgress(id));
+    }
+
+    private int getBurnLeftScaled() {
+        return (int)(this.furnace.getBurnTimeRemaining() * GUI.fuelHeight);
     }
 
     @Override

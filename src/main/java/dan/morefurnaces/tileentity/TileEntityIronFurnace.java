@@ -50,7 +50,6 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable {
 
     private final ItemHandlerFurnace itemHandler;
 
-    @SuppressWarnings("unused")
     public TileEntityIronFurnace() {
         this(FurnaceType.IRON);
     }
