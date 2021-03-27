@@ -1,6 +1,5 @@
 package dan.morefurnaces;
 
-import cubex2.mods.morefurnaces.tileentity.*;
 import dan.morefurnaces.tileentity.*;
 import net.minecraft.util.IStringSerializable;
 

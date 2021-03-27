@@ -33,7 +33,7 @@ public class MoreFurnaces {
     private static ItemMoreFurnaces itemBlock;
     public static ItemUpgrade upgrade;
 
-    @SidedProxy(clientSide = "cubex2.mods.morefurnaces.proxy.ClientProxy", serverSide = "cubex2.mods.morefurnaces.proxy.CommonProxy")
+    @SidedProxy(clientSide = "dan.morefurnaces.proxy.ClientProxy", serverSide = "dan.morefurnaces.proxy.CommonProxy")
     public static CommonProxy proxy;
 
     @Mod.Instance(MODID)

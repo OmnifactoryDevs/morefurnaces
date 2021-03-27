@@ -16,31 +16,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-/*
- * No More CXLib
- *
- * ⠀⠀⠀⠀⣠⣦⣤⣀
- * ⠀⠀⠀⠀⢡⣤⣿⣿
- * ⠀⠀⠀⠀⠠⠜⢾⡟
- * ⠀⠀⠀⠀⠀⠹⠿⠃⠄
- * ⠀⠀⠈⠀⠉⠉⠑⠀⠀⠠⢈⣆
- * ⠀⠀⣄⠀⠀⠀⠀⠀⢶⣷⠃⢵
- * ⠐⠰⣷⠀⠀⠀⠀⢀⢟⣽⣆⠀⢃
- * ⠰⣾⣶⣤⡼⢳⣦⣤⣴⣾⣿⣿⠞
- * ⠀⠈⠉⠉⠛⠛⠉⠉⠉⠙⠁
- * ⠀⠀⡐⠘⣿⣿⣯⠿⠛⣿⡄
- * ⠀⠀⠁⢀⣄⣄⣠⡥⠔⣻⡇
- * ⠀⠀⠀⠘⣛⣿⣟⣖⢭⣿⡇
- * ⠀⠀⢀⣿⣿⣿⣿⣷⣿⣽⡇
- * ⠀⠀⢸⣿⣿⣿⡇⣿⣿⣿⣇
- * ⠀⠀⠀⢹⣿⣿⡀⠸⣿⣿⡏
- * ⠀⠀⠀⢸⣿⣿⠇⠀⣿⣿⣿
- * ⠀⠀⠀⠈⣿⣿⠀⠀⢸⣿⡿
- * ⠀⠀⠀⠀⣿⣿⠀⠀⢀⣿⡇
- * ⠀⣠⣴⣿⡿⠟⠀⠀⢸⣿⣷
- * ⠀⠉⠉⠁⠀⠀⠀⠀⢸⣿⣿⠁
- * ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈
- */
 public class ContainerIronFurnace extends Container {
     private FurnaceType type;
     private EntityPlayer player;

@@ -1,12 +1,8 @@
 package dan.morefurnaces.gui;
 
-import cubex2.cxlibrary.gui.GuiContainerCX;
-import cubex2.cxlibrary.gui.GuiTexture;
-import cubex2.cxlibrary.gui.control.HorizontalProgressBar;
-import cubex2.cxlibrary.gui.control.ScreenCenter;
-import cubex2.cxlibrary.gui.control.VerticalProgressBar;
 import dan.morefurnaces.FurnaceType;
 import dan.morefurnaces.inventory.ContainerIronFurnace;
+import dan.morefurnaces.lib.*;
 import dan.morefurnaces.tileentity.TileEntityIronFurnace;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.InventoryPlayer;
