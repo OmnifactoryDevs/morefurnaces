@@ -1,10 +1,8 @@
-import java.util.regex.Pattern
 import groovy.json.JsonSlurper
 
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
-import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
 
@@ -22,9 +20,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-//Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
-
-group = "omnifactorydevs.morefurnaces" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "omnifactorydevs.morefurnaces"
 version = getRewrittenVersion()
 archivesBaseName = project_artifact_name
 
@@ -34,7 +30,7 @@ targetCompatibility = 1.8
 minecraft {
     version = "1.12.2-14.23.5.2847"
     runDir = "run"
-    mappings = "snapshot_20171003"
+    mappings = "stable_39"
     makeObfSourceJar = false
 
     replace "GRADLE:VERSION", project.version
@@ -46,23 +42,14 @@ jar {
 }
 
 repositories {
-
     maven {
-       url = "https://minecraft.curseforge.com/api/maven"
-    }
-
-    maven {
+        name = "JEI Maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
-
 }
 
 dependencies {
     testCompile 'junit:junit:4.5'
-
-    implementation 'cxlibrary:cxlibrary:1.12.1:1.6.1'
-    runtime 'cxlibrary:cxlibrary:1.12.1:1.6.1'
-
     runtime "mezz.jei:jei_1.12.2:4.15.0.293"
 }
 
