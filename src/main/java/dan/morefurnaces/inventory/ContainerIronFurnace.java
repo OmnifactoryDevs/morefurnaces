@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -14,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
@@ -31,7 +33,7 @@ public class ContainerIronFurnace extends Container {
         this.type = type;
         lastCookTime = new int[type.parallelSmelting];
 
-        addFurnaceSlots();
+        addFurnaceSlots(invPlayer);
         addPlayerSlots(invPlayer);
 /*
         int slotId = 0;
@@ -52,16 +54,50 @@ public class ContainerIronFurnace extends Container {
             addSlotToContainer(new NamedSlot("player", invPlayer, i));*/
     }
 
-    private void addFurnaceSlots() {
-        IItemHandler itemHandler = this.furnace.getItemHandler();
+    private void addFurnaceSlots(InventoryPlayer inv) {
+        ItemHandlerFurnace itemHandler = this.furnace.getItemHandler();
         if (type.parallelSmelting != 1) {
             // OBSIDIAN FURNACE
         } else if (type.getNumInputSlots() == 4) {
             // SILVER, GOLD FURNACE
         } else if (type.getNumFuelSlots() < 3) {
             // IRON, NETHERRACK, COPPER FURNACE
+            int index = 0;
+
+            // Input Slots
+            for (int slot = 0; slot < type.getNumInputSlots(); slot++) {
+                int x = 56 - 18 * slot;
+                int y = 17;
+                this.addSlotToContainer(new SlotItemHandler(itemHandler, index++, x, y));
+            }
+            // Fuel Slots
+            for (int slot = 0; slot < type.getNumFuelSlots(); slot++) {
+                int x = 56 - 18 * slot;
+                int y = 53;
+                this.addSlotToContainer(new SlotFuel(itemHandler, index++, x, y));
+            }
+            // Primary Output Slot
+            this.addSlotToContainer(new SlotOutput(inv.player, itemHandler, index++, 116, 35));
+            if (type.getNumOutputSlots() == 2)
+                this.addSlotToContainer(new SlotOutput(inv.player, itemHandler, index, 138, 39));
         } else {
             // DIAMOND FURNACE
+        }
+    }
+
+    private void addPlayerSlots(IInventory inv) {
+        for (int row = 0; row < 3; ++row) {
+            for (int col = 0; col < 9; ++col) { // TODO col++?
+                int x = 8 + col * 18;
+                int y = row * 18 + type.invStartY;
+                this.addSlotToContainer(new Slot(inv, col + row * 9 + 9, x, y)); // TODO is +10 correct for index? Or is it type.getNumSlots()?
+            }
+        }
+
+        for (int row = 0; row < 9; ++row) {
+            int x = 8 + row * 18;
+            int y = 58 + type.invStartY;
+            this.addSlotToContainer(new Slot(inv, row, x, y));
         }
     }
 

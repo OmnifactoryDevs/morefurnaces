@@ -8,27 +8,16 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class SlotFuel extends SlotItemHandler implements INamedSlot
-{
-    private final String name;
+public class SlotFuel extends SlotItemHandler {
     private final ItemHandlerFurnace inventoryIn;
 
-    public SlotFuel(String name, ItemHandlerFurnace inventoryIn, int slotIndex)
-    {
-        super(inventoryIn, slotIndex, -2000, -2000);
+    public SlotFuel(ItemHandlerFurnace inventoryIn, int slotIndex, int x, int y) {
+        super(inventoryIn, slotIndex, x, y);
         this.inventoryIn = inventoryIn;
-        this.name = name;
     }
 
     @Override
-    public String getName()
-    {
-        return name;
-    }
-
-    @Override
-    public boolean canTakeStack(EntityPlayer playerIn)
-    {
+    public boolean canTakeStack(EntityPlayer playerIn) {
         inventoryIn.slotChecksEnabled = false;
         boolean allow = super.canTakeStack(playerIn);
         inventoryIn.slotChecksEnabled = true;
@@ -38,8 +27,7 @@ public class SlotFuel extends SlotItemHandler implements INamedSlot
 
     @Nonnull
     @Override
-    public ItemStack decrStackSize(int amount)
-    {
+    public ItemStack decrStackSize(int amount) {
         inventoryIn.slotChecksEnabled = false;
         ItemStack stack = super.decrStackSize(amount);
         inventoryIn.slotChecksEnabled = true;
@@ -47,13 +35,11 @@ public class SlotFuel extends SlotItemHandler implements INamedSlot
         return stack;
     }
 
-    public boolean isItemValid(ItemStack stack)
-    {
+    public boolean isItemValid(ItemStack stack) {
         return TileEntityFurnace.isItemFuel(stack) || SlotFurnaceFuel.isBucket(stack);
     }
 
-    public int getItemStackLimit(ItemStack stack)
-    {
+    public int getItemStackLimit(ItemStack stack) {
         return SlotFurnaceFuel.isBucket(stack) ? 1 : super.getItemStackLimit(stack);
     }
 }

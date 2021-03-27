@@ -4,13 +4,13 @@ import dan.morefurnaces.tileentity.*;
 import net.minecraft.util.IStringSerializable;
 
 public enum FurnaceType implements IStringSerializable {
-    IRON(2, 2, 2, 1, 150, 1.25f, "Iron Furnace", TileEntityIronFurnace.class),
-    GOLD(4, 5, 4, 1, 80, 2.0f, "Gold Furnace", TileEntityGoldFurnace.class),
-    DIAMOND(7, 9, 7, 1, 40, 4.0f, "Diamond Furnace", TileEntityDiamondFurnace.class),
-    OBSIDIAN(2, 2, 2, 2, 150, 2.0f, "Obsidian Furnace", TileEntityObsidianFurnace.class),
-    NETHERRACK(1, 1, 0, 1, 1800, 1.0f, "Netherrack Furnace", TileEntityNetherrackFurnace.class),
-    COPPER(2, 2, 2, 1, 150, 1.25f, "Copper Furnace", TileEntityCopperFurnace.class),
-    SILVER(4, 5, 4, 1, 100, 1.75f, "Silver Furnace", TileEntitySilverFurnace.class);
+    IRON(2, 2, 2, 1, 150, 1.25f, 84, "Iron Furnace", TileEntityIronFurnace.class),
+    GOLD(4, 5, 4, 1, 80, 2.0f, 84, "Gold Furnace", TileEntityGoldFurnace.class),
+    DIAMOND(7, 9, 7, 1, 40, 4.0f, 120, "Diamond Furnace", TileEntityDiamondFurnace.class),
+    OBSIDIAN(2, 2, 2, 2, 150, 2.0f, 114, "Obsidian Furnace", TileEntityObsidianFurnace.class),
+    NETHERRACK(1, 1, 0, 1, 1800, 1.0f, 84, "Netherrack Furnace", TileEntityNetherrackFurnace.class),
+    COPPER(2, 2, 2, 1, 150, 1.25f, 84, "Copper Furnace", TileEntityCopperFurnace.class),
+    SILVER(4, 5, 4, 1, 100, 1.75f, 84, "Silver Furnace", TileEntitySilverFurnace.class);
 
     final int inputSlots;
     final int outputSlots;
@@ -23,16 +23,18 @@ public enum FurnaceType implements IStringSerializable {
 
     public final int speed;
     public final float consumptionRate;
+    public final int invStartY;
     public final String friendlyName;
     public final Class<? extends TileEntityIronFurnace> clazz;
 
     FurnaceType(int inputSlots, int outputSlots, int fuelSlots,
-                int parallelSmelting, int speed, float consumptionRate, String friendlyName,
-                Class<? extends TileEntityIronFurnace> clazz) {
+                int parallelSmelting, int speed, float consumptionRate, int invStartY,
+                String friendlyName, Class<? extends TileEntityIronFurnace> clazz) {
         this.inputSlots = inputSlots;
         this.outputSlots = outputSlots;
         this.fuelSlots = fuelSlots;
         this.parallelSmelting = parallelSmelting;
+        this.invStartY = invStartY;
 
         inputSlotIds = new int[inputSlots * parallelSmelting];
         outputSlotIds = new int[outputSlots * parallelSmelting];
