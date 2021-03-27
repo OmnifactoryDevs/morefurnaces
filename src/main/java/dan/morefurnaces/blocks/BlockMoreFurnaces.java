@@ -80,7 +80,7 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider {
         TileEntity te = world.getTileEntity(pos);
         if (te != null && te instanceof TileEntityIronFurnace) {
             TileEntityIronFurnace furnace = (TileEntityIronFurnace) te;
-            facing = EnumFacing.getFront(furnace.getFacing());
+            facing = EnumFacing.byIndex(furnace.getFacing());
             if (facing == EnumFacing.DOWN || facing == EnumFacing.UP)
                 facing = EnumFacing.NORTH;
             active = furnace.isActive();
@@ -120,7 +120,7 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider {
 
             TileEntity te = world.getTileEntity(pos);
             if (te instanceof TileEntityIronFurnace) {
-                enumfacing = EnumFacing.getFront(((TileEntityIronFurnace) te).getFacing());
+                enumfacing = EnumFacing.byIndex(((TileEntityIronFurnace) te).getFacing());
             }
 
             IBlockState iblockstate = world.getBlockState(pos.north());
@@ -202,7 +202,7 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider {
         }
 
         TileEntityIronFurnace tef = (TileEntityIronFurnace) te;
-        EnumFacing newFacing = EnumFacing.getFront(tef.getFacing()).rotateY();
+        EnumFacing newFacing = EnumFacing.byIndex(tef.getFacing()).rotateY();
         tef.setFacing((byte) newFacing.ordinal());
         IBlockState state = world.getBlockState(pos);
         world.setBlockState(pos, state.withProperty(FACING, newFacing));
