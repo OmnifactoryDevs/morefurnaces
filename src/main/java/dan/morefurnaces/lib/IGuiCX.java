@@ -10,8 +10,6 @@ public interface IGuiCX {
 
     void drawTheHoveringText(List<String> textLines, int x, int y);
 
-    void drawTheDefaultBackground();
-
     int getTheWidth();
 
     int getTheHeight();

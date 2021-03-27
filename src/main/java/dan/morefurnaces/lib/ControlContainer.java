@@ -29,8 +29,6 @@ public class ControlContainer<T extends Control> extends Control implements ICon
     public Control getControl(String name) {
         if (childrenMap.containsKey(name))
             return childrenMap.get(name);
-        /*if (parent != null && parent != this)
-            return parent.getControl(name);*/
 
         return null;
     }
@@ -152,14 +150,6 @@ public class ControlContainer<T extends Control> extends Control implements ICon
 
     public VerticalProgressBar.Builder verticalBar(String name, GuiTexture texture, String part) {
         return new VerticalProgressBar.Builder(texture, part, data, name, this);
-    }
-
-    public Button.Builder button(String name, String text) {
-        return new Button.Builder(text, data, name, this);
-    }
-
-    public Label.Builder label(String name, String text) {
-        return new Label.Builder(text, data, name, this);
     }
 
     public static class Builder<S extends Control> extends ControlBuilder<ControlContainer<S>> {

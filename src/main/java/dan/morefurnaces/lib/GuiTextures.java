@@ -6,7 +6,6 @@ public class GuiTextures {
     private GuiTextures() {
     }
 
-    public static final GuiTexture BG = new GuiTexture(Textures.BG, 256, 256, true);
     public static final GuiTexture MC_WIDGETS = new GuiTexture(Textures.MC_WIDGETS, 256, 256, false);
 
     static {

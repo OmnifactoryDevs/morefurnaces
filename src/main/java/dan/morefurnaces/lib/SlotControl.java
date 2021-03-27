@@ -13,14 +13,6 @@ public class SlotControl extends Control {
         this.slot = slot;
     }
 
-    public void setHoveringText(String hoveringText) {
-        this.hoveringText = hoveringText;
-    }
-
-    public Slot getSlot() {
-        return slot;
-    }
-
     @Override
     public void drawForeground(int mouseX, int mouseY, float partialTicks) {
         if (isMouseOverControl(mouseX, mouseY)) {

@@ -77,22 +77,6 @@ public class Anchor {
         return this;
     }
 
-    public Anchor centerHorIn(Control c) {
-        return left(c, 0, true).right(c, 0, true);
-    }
-
-    public Anchor centerVertIn(Control c) {
-        return top(c, 0, true).bottom(c, 0, true);
-    }
-
-    public Anchor centerHorBetween(Control left, Control right) {
-        return left(left, 0, false).right(right, 0, false);
-    }
-
-    public Anchor centerVertBetween(Control top, Control bottom) {
-        return top(top, 0, false).bottom(bottom, 0, false);
-    }
-
     public Rectangle apply() {
         int x = 0;
         int y = 0;

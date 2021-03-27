@@ -13,15 +13,6 @@ public class Label extends Control {
         setText(text);
     }
 
-    public Label setCentered() {
-        centered = true;
-        return this;
-    }
-
-    public String getText() {
-        return text;
-    }
-
     public void setText(String value) {
         text = value;
         if (text != null)

@@ -80,11 +80,6 @@ public class GuiTexture {
         draw(x, y, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), width, height);
     }
 
-    public void drawPart(String key, int x, int y) {
-        Rectangle rect = parts.get(key);
-        draw(x, y, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-    }
-
     public void drawPart(String key, int x, int y, int width, int height) {
         Rectangle rect = parts.get(key);
         draw(x, y, rect.getX(), rect.getY(), width, height);

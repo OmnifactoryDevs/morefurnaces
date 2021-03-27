@@ -121,6 +121,4 @@ public class ControlData {
         data.sameSideBottom = sameSideBottom;
         return data;
     }
-
-
 }
