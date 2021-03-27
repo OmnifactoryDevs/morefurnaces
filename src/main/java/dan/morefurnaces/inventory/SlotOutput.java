@@ -1,6 +1,5 @@
 package dan.morefurnaces.inventory;
 
-import cubex2.cxlibrary.inventory.ISlotCX;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -11,7 +10,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class SlotOutput extends SlotItemHandler implements ISlotCX
+public class SlotOutput extends SlotItemHandler implements INamedSlot
 {
     private final String name;
     private final EntityPlayer player;

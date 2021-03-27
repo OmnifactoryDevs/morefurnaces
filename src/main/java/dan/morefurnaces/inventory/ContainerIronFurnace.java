@@ -6,7 +6,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -71,7 +70,7 @@ public class ContainerIronFurnace extends Container {
 
         // Player Inventory slots
         for (int i = 0; i < invPlayer.mainInventory.size(); i++)
-            addSlotToContainer(new SlotCX("player", invPlayer, i));
+            addSlotToContainer(new NamedSlot("player", invPlayer, i));
     }
 
     @Override

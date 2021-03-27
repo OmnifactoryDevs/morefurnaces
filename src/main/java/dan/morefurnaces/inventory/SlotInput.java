@@ -1,10 +1,9 @@
 package dan.morefurnaces.inventory;
 
-import cubex2.cxlibrary.inventory.ISlotCX;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class SlotInput extends SlotItemHandler implements ISlotCX
+public class SlotInput extends SlotItemHandler implements INamedSlot
 {
     private final String name;
 

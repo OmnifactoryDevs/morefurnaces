@@ -1,6 +1,5 @@
 package dan.morefurnaces.inventory;
 
-import cubex2.cxlibrary.inventory.ISlotCX;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
@@ -9,7 +8,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class SlotFuel extends SlotItemHandler implements ISlotCX
+public class SlotFuel extends SlotItemHandler implements INamedSlot
 {
     private final String name;
     private final ItemHandlerFurnace inventoryIn;
