@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 
@@ -30,6 +31,9 @@ public class ContainerIronFurnace extends Container {
         this.type = type;
         lastCookTime = new int[type.parallelSmelting];
 
+        addFurnaceSlots();
+        addPlayerSlots(invPlayer);
+/*
         int slotId = 0;
         for (int i = 0; i < type.getNumInputSlots(); i++) {
             addSlotToContainer(new SlotInput("furnace", invFurnace.getItemHandler(), slotId++));
@@ -45,7 +49,20 @@ public class ContainerIronFurnace extends Container {
 
         // Player Inventory slots
         for (int i = 0; i < invPlayer.mainInventory.size(); i++)
-            addSlotToContainer(new NamedSlot("player", invPlayer, i));
+            addSlotToContainer(new NamedSlot("player", invPlayer, i));*/
+    }
+
+    private void addFurnaceSlots() {
+        IItemHandler itemHandler = this.furnace.getItemHandler();
+        if (type.parallelSmelting != 1) {
+            // OBSIDIAN FURNACE
+        } else if (type.getNumInputSlots() == 4) {
+            // SILVER, GOLD FURNACE
+        } else if (type.getNumFuelSlots() < 3) {
+            // IRON, NETHERRACK, COPPER FURNACE
+        } else {
+            // DIAMOND FURNACE
+        }
     }
 
     public TileEntityIronFurnace getTileEntity() {

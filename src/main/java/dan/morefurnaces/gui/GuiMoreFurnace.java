@@ -25,20 +25,14 @@ public class GuiMoreFurnace extends GuiContainer {
         // Fuel Overlay GUI Location
         private static final int fuelWidth = 14;
         private static final int fuelHeight = 13;
-        private static final int fuelX = 176;
-        private static final int fuelY = 0;
 
         // Cook Overlay GUI Location
         private static final int cookWidth = 24;
         private static final int cookHeight = 16;
-        private static final int cookX = 176;
-        private static final int cookY = 14;
 
         // BG GUI Location
-        private static final int bgWidth = 176;
+        private final int bgWidth = 176;
         private final int bgHeight;
-        private static final int bgX = 0;
-        private static final int bgY = 0;
 
         GUI(ResourceLocation texture, FurnaceType mainType, int bgHeight) {
             this.texture = texture;
@@ -68,6 +62,8 @@ public class GuiMoreFurnace extends GuiContainer {
         super(invFurnace);
         furnace = invFurnace.getTileEntity();
         this.type = type;
+        xSize = type.bgWidth;
+        ySize = type.bgHeight;
 
         //cookBars = new HorizontalProgressBar[type.mainType.parallelSmelting];
         //for (int i = 0; i < cookBars.length; i++) {
@@ -91,5 +87,6 @@ public class GuiMoreFurnace extends GuiContainer {
         //fuelBar.setProgress(-1f + furnace.getBurnTimeRemaining());
 
         super.drawScreen(mouseX, mouseY, partialTicks);
+        super.renderHoveredToolTip(mouseX, mouseY);
     }
 }
