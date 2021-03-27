@@ -41,6 +41,26 @@ public class ContainerIronFurnace extends Container {
         ItemHandlerFurnace itemHandler = this.furnace.getItemHandler();
         if (type.parallelSmelting != 1) {
             // OBSIDIAN FURNACE
+            int index = 0;
+            for (int row = 0; row < 2; row++) {
+                for (int col = 0; col < 2; col++) {
+                    int x = 56 - 18 * col;
+                    int y = 17 + 26 * row; // 26 to create the gap between the inputs
+                    this.addSlotToContainer(new SlotItemHandler(itemHandler, index++, x,  y));
+                }
+            }
+            for (int slot = 0; slot < 2; slot++) {
+                int x = 56 - 18 * slot;
+                int y = 83;
+                this.addSlotToContainer(new SlotFuel(itemHandler, index++, x, y));
+            }
+            for (int row = 0; row < 2; row++) {
+                for (int col = 0; col < 2; col++) {
+                    int x = 116 + 22 * col;
+                    int y = 18 + (26 * row) + (4 * col);
+                    this.addSlotToContainer(new SlotOutput(inv.player, itemHandler, index++, x, y));
+                }
+            }
         } else if (type.getNumInputSlots() == 4) {
             // SILVER, GOLD FURNACE
             int index = 0;

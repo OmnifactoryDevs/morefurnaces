@@ -45,6 +45,7 @@ public class MoreFurnaces {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        MFLog.init(event.getModLog());
         Config.init(event.getSuggestedConfigurationFile());
 
         blockFurnaces = new BlockMoreFurnaces();
