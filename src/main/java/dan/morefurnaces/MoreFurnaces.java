@@ -4,6 +4,7 @@ import dan.morefurnaces.blocks.BlockMoreFurnaces;
 import dan.morefurnaces.items.ItemMoreFurnaces;
 import dan.morefurnaces.items.ItemUpgrade;
 import dan.morefurnaces.proxy.CommonProxy;
+import dan.morefurnaces.proxy.GuiProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -67,11 +68,11 @@ public class MoreFurnaces {
     }
 
     @Mod.EventHandler
-    public void load(FMLInitializationEvent evt) {
+    public void init(FMLInitializationEvent event) {
         for (FurnaceType typ : FurnaceType.values()) {
             GameRegistry.registerTileEntity(typ.clazz, "CubeX2 " + typ.friendlyName);
         }
 
-        NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiProxy());
     }
 }

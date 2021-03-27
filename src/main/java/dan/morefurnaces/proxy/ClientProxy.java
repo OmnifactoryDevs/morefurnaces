@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 
 public class ClientProxy extends CommonProxy {
+
     @Override
     public void registerRenderInformation() {
         Item item = Item.getItemFromBlock(MoreFurnaces.blockFurnaces);
