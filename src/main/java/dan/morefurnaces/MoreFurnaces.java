@@ -1,6 +1,5 @@
 package dan.morefurnaces;
 
-import codechicken.lib.CodeChickenLib;
 import dan.morefurnaces.blocks.BlockMoreFurnaces;
 import dan.morefurnaces.items.ItemMoreFurnaces;
 import dan.morefurnaces.items.ItemUpgrade;
@@ -22,7 +21,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
         name = MoreFurnaces.NAME,
         version = MoreFurnaces.VERSION,
         acceptedMinecraftVersions = "[1.12,)",
-        dependencies = CodeChickenLib.MOD_VERSION_DEP,
         useMetadata = true)
 public class MoreFurnaces {
 

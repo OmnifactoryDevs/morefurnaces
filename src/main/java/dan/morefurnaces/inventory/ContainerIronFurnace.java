@@ -1,13 +1,12 @@
 package dan.morefurnaces.inventory;
 
-
-import cubex2.cxlibrary.inventory.ContainerCX;
 import dan.morefurnaces.FurnaceType;
 import dan.morefurnaces.tileentity.TileEntityIronFurnace;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -16,11 +15,34 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.Nonnull;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
-public class ContainerIronFurnace extends ContainerCX {
+/*
+ * No More CXLib
+ *
+ * ⠀⠀⠀⠀⣠⣦⣤⣀
+ * ⠀⠀⠀⠀⢡⣤⣿⣿
+ * ⠀⠀⠀⠀⠠⠜⢾⡟
+ * ⠀⠀⠀⠀⠀⠹⠿⠃⠄
+ * ⠀⠀⠈⠀⠉⠉⠑⠀⠀⠠⢈⣆
+ * ⠀⠀⣄⠀⠀⠀⠀⠀⢶⣷⠃⢵
+ * ⠐⠰⣷⠀⠀⠀⠀⢀⢟⣽⣆⠀⢃
+ * ⠰⣾⣶⣤⡼⢳⣦⣤⣴⣾⣿⣿⠞
+ * ⠀⠈⠉⠉⠛⠛⠉⠉⠉⠙⠁
+ * ⠀⠀⡐⠘⣿⣿⣯⠿⠛⣿⡄
+ * ⠀⠀⠁⢀⣄⣄⣠⡥⠔⣻⡇
+ * ⠀⠀⠀⠘⣛⣿⣟⣖⢭⣿⡇
+ * ⠀⠀⢀⣿⣿⣿⣿⣷⣿⣽⡇
+ * ⠀⠀⢸⣿⣿⣿⡇⣿⣿⣿⣇
+ * ⠀⠀⠀⢹⣿⣿⡀⠸⣿⣿⡏
+ * ⠀⠀⠀⢸⣿⣿⠇⠀⣿⣿⣿
+ * ⠀⠀⠀⠈⣿⣿⠀⠀⢸⣿⡿
+ * ⠀⠀⠀⠀⣿⣿⠀⠀⢀⣿⡇
+ * ⠀⣠⣴⣿⡿⠟⠀⠀⢸⣿⣷
+ * ⠀⠉⠉⠁⠀⠀⠀⠀⢸⣿⣿⠁
+ * ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈
+ */
+public class ContainerIronFurnace extends Container {
     private FurnaceType type;
     private EntityPlayer player;
     private TileEntityIronFurnace furnace;
@@ -47,7 +69,9 @@ public class ContainerIronFurnace extends ContainerCX {
             addSlotToContainer(new SlotOutput("furnace", player, invFurnace.getItemHandler(), slotId++));
         }
 
-        addPlayerSlots(invPlayer);
+        // Player Inventory slots
+        for (int i = 0; i < invPlayer.mainInventory.size(); i++)
+            addSlotToContainer(new SlotCX("player", invPlayer, i));
     }
 
     @Override
@@ -114,7 +138,6 @@ public class ContainerIronFurnace extends ContainerCX {
         return i >= type.getFirstFuelSlot() && i <= type.getLastFuelSlot();
     }
 
-    @Override
     protected boolean transferStackInSlot(Slot slot, int index, ItemStack stack1, ItemStack stack) {
         if (isOutputSlot(index)) {
             if (!this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 36, true))
@@ -137,5 +160,33 @@ public class ContainerIronFurnace extends ContainerCX {
             return true;
 
         return false;
+    }
+
+    @Override
+    @Nonnull
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+        ItemStack stack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
+
+        if (slot != null && slot.getHasStack()) {
+            ItemStack stack1 = slot.getStack();
+            stack = stack1.copy();
+
+            if (transferStackInSlot(slot, index, stack1, stack))
+                return ItemStack.EMPTY;
+
+            if (stack1.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            } else {
+                slot.onSlotChanged();
+            }
+
+            if (stack1.getCount() == stack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+
+            slot.onTake(playerIn, stack1);
+        }
+        return stack;
     }
 }
