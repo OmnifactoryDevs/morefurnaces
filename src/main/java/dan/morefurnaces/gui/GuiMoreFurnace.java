@@ -82,11 +82,6 @@ public class GuiMoreFurnace extends GuiContainer {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawDefaultBackground();
-
-        //for (int i = 0; i < cookBars.length; i++)
-        //    cookBars[i].setProgress(furnace.getCookProgress(i));
-        //fuelBar.setProgress(-1f + furnace.getBurnTimeRemaining());
-
         super.drawScreen(mouseX, mouseY, partialTicks);
         super.renderHoveredToolTip(mouseX, mouseY);
     }

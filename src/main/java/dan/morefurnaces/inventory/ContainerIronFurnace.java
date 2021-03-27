@@ -20,15 +20,13 @@ import javax.annotation.Nonnull;
 
 public class ContainerIronFurnace extends Container {
     private final FurnaceType type;
-    private EntityPlayer player;
     private final TileEntityIronFurnace furnace;
-    private int lastCookTime[];
+    private int[] lastCookTime;
     private int lastBurnTime = 0;
     private int lastItemBurnTime = 0;
 
     public ContainerIronFurnace(InventoryPlayer invPlayer, TileEntityIronFurnace invFurnace, FurnaceType type) {
         furnace = invFurnace;
-        player = invPlayer.player;
         this.type = type;
         lastCookTime = new int[type.parallelSmelting];
 
