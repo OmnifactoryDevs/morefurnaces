@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 public class ContainerIronFurnace extends Container {
     private FurnaceType type;
     private EntityPlayer player;
-    private TileEntityIronFurnace furnace;
+    private final TileEntityIronFurnace furnace;
     private int lastCookTime[];
     private int lastBurnTime = 0;
     private int lastItemBurnTime = 0;
@@ -46,6 +46,10 @@ public class ContainerIronFurnace extends Container {
         // Player Inventory slots
         for (int i = 0; i < invPlayer.mainInventory.size(); i++)
             addSlotToContainer(new NamedSlot("player", invPlayer, i));
+    }
+
+    public TileEntityIronFurnace getTileEntity() {
+        return furnace;
     }
 
     @Override

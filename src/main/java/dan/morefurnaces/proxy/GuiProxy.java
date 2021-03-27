@@ -26,8 +26,7 @@ public class GuiProxy implements IGuiHandler {
         TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
         if (te instanceof TileEntityIronFurnace) {
             TileEntityIronFurnace furnaceTe = (TileEntityIronFurnace) te;
-            // return new GuiMoreFurnace(te, new ContainerIronFurnace(player.inventory, furnaceTe, furnaceTe.getType()));
-            return GuiMoreFurnace.GUI.buildGui(player.inventory, furnaceTe); // TODO REMOVE
+            return GuiMoreFurnace.GUI.buildGui(player.inventory, furnaceTe);
         }
         return null;
     }

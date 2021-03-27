@@ -91,15 +91,7 @@ public class ControlContainer<T extends Control> extends Control implements ICon
 
             boolean inControl = c.isMouseOverControl(mouseX, mouseY);
             c.mouseClicked(mouseX, mouseY, button, inControl);
-            if (inControl) {
-                controlClicked(c, mouseX, mouseY, button);
-            }
         }
-    }
-
-    protected void controlClicked(T c, int mouseX, int mouseY, int button) {
-        if (parent instanceof ControlContainer)
-            parent.controlClicked(c, mouseX, mouseY, button);
     }
 
     @Override

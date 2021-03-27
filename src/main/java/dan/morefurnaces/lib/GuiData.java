@@ -1,7 +1,6 @@
 package dan.morefurnaces.lib;
 
 import com.google.common.collect.Maps;
-import dan.morefurnaces.inventory.INamedSlot;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Map;
@@ -26,23 +25,6 @@ public class GuiData {
         }
 
         return new Anchor();
-    }
-
-    public SlotControl.Builder apply(SlotControl.Builder builder) {
-        if (slots != null) {
-            loadParent();
-
-            if (builder.slot instanceof INamedSlot) {
-                String name = ((INamedSlot) builder.slot).getName();
-
-                SlotData[] slotDatas = slots.get(name);
-                for (SlotData slotData : slotDatas) {
-                    if (slotData.apply(builder))
-                        return builder;
-                }
-            }
-        }
-        return builder;
     }
 
     private void loadParent() {

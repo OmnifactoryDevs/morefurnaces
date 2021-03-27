@@ -1,27 +1,13 @@
 package dan.morefurnaces.lib;
 
-import java.util.Collections;
-
 import net.minecraft.inventory.Slot;
 
 public class SlotControl extends Control {
-    private String hoveringText;
     private final Slot slot;
 
     public SlotControl(Slot slot, Anchor anchor, ControlContainer parent) {
         super(anchor, parent);
         this.slot = slot;
-    }
-
-    @Override
-    public void drawForeground(int mouseX, int mouseY, float partialTicks) {
-        if (isMouseOverControl(mouseX, mouseY)) {
-            if (hoveringText != null) {
-                screen.gui.drawTheHoveringText(Collections.singletonList(hoveringText), mouseX, mouseY);
-            } else if (mc.player.inventory.getItemStack().isEmpty() && slot.getHasStack()) {
-                screen.gui.renderTheToolTip(slot.getStack(), mouseX, mouseY);
-            }
-        }
     }
 
     @Override
