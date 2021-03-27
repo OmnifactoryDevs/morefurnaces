@@ -8,29 +8,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class ControlContainer<T extends Control> extends Control implements IControlProvider
-{
+public class ControlContainer<T extends Control> extends Control implements IControlProvider {
     protected GuiData data;
     private final List<T> children = Lists.newLinkedList();
     private final Map<String, T> childrenMap = Maps.newHashMap();
 
-    public ControlContainer(ResourceLocation location, Anchor anchor, ControlContainer parent)
-    {
+    public ControlContainer(ResourceLocation location, Anchor anchor, ControlContainer parent) {
         super(anchor, parent);
 
         data = ClientUtil.loadGuiData(location, true);
     }
 
-    public void addChild(T child, String name)
-    {
+    public void addChild(T child, String name) {
         children.add(child);
         if (name != null)
             childrenMap.put(name, child);
     }
 
     @Override
-    public Control getControl(String name)
-    {
+    public Control getControl(String name) {
         if (childrenMap.containsKey(name))
             return childrenMap.get(name);
         /*if (parent != null && parent != this)
@@ -40,32 +36,28 @@ public class ControlContainer<T extends Control> extends Control implements ICon
     }
 
     @Override
-    public void setEnabled(boolean enabled)
-    {
+    public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
 
         children.forEach(c -> c.setEnabled(enabled));
     }
 
     @Override
-    public void setVisible(boolean visible)
-    {
+    public void setVisible(boolean visible) {
         super.setVisible(visible);
 
         children.forEach(c -> c.setVisible(visible));
     }
 
     @Override
-    public void updateBounds()
-    {
+    public void updateBounds() {
         super.updateBounds();
 
         children.forEach(T::updateBounds);
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float partialTicks)
-    {
+    public void draw(int mouseX, int mouseY, float partialTicks) {
         super.draw(mouseX, mouseY, partialTicks);
 
         children.stream()
@@ -74,8 +66,7 @@ public class ControlContainer<T extends Control> extends Control implements ICon
     }
 
     @Override
-    public void drawForeground(int mouseX, int mouseY, float partialTicks)
-    {
+    public void drawForeground(int mouseX, int mouseY, float partialTicks) {
         super.drawForeground(mouseX, mouseY, partialTicks);
 
         children.stream()
@@ -84,43 +75,37 @@ public class ControlContainer<T extends Control> extends Control implements ICon
     }
 
     @Override
-    public void update(int mouseX, int mouseY)
-    {
+    public void update(int mouseX, int mouseY) {
         super.update(mouseX, mouseY);
 
         children.forEach(c -> c.update(mouseX, mouseY));
     }
 
     @Override
-    public void mouseClicked(int mouseX, int mouseY, int button, boolean intoControl)
-    {
+    public void mouseClicked(int mouseX, int mouseY, int button, boolean intoControl) {
         super.mouseClicked(mouseX, mouseY, button, intoControl);
 
         Iterator<T> it = children.stream()
                 .filter(Control::isEnabled).iterator();
 
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             T c = it.next();
 
             boolean inControl = c.isMouseOverControl(mouseX, mouseY);
             c.mouseClicked(mouseX, mouseY, button, inControl);
-            if (inControl)
-            {
+            if (inControl) {
                 controlClicked(c, mouseX, mouseY, button);
             }
         }
     }
 
-    protected void controlClicked(T c, int mouseX, int mouseY, int button)
-    {
+    protected void controlClicked(T c, int mouseX, int mouseY, int button) {
         if (parent instanceof ControlContainer)
             parent.controlClicked(c, mouseX, mouseY, button);
     }
 
     @Override
-    public void mouseReleased(int mouseX, int mouseY, int button)
-    {
+    public void mouseReleased(int mouseX, int mouseY, int button) {
         super.mouseReleased(mouseX, mouseY, button);
 
         children.stream()
@@ -129,8 +114,7 @@ public class ControlContainer<T extends Control> extends Control implements ICon
     }
 
     @Override
-    public void mouseClickMove(int mouseX, int mouseY, int button, long timeSinceLastClick)
-    {
+    public void mouseClickMove(int mouseX, int mouseY, int button, long timeSinceLastClick) {
         super.mouseClickMove(mouseX, mouseY, button, timeSinceLastClick);
 
         children.stream()
@@ -139,8 +123,7 @@ public class ControlContainer<T extends Control> extends Control implements ICon
     }
 
     @Override
-    public void keyTyped(char typedChar, int keyCode)
-    {
+    public void keyTyped(char typedChar, int keyCode) {
         super.keyTyped(typedChar, keyCode);
 
         children.stream()
@@ -149,56 +132,46 @@ public class ControlContainer<T extends Control> extends Control implements ICon
     }
 
     @Override
-    public void onClosed()
-    {
+    public void onClosed() {
         super.onClosed();
 
         children.forEach(Control::onClosed);
     }
 
-    public <S extends Control> Builder<S> container(String name, ResourceLocation dataLocation)
-    {
+    public <S extends Control> Builder<S> container(String name, ResourceLocation dataLocation) {
         return new Builder<>(dataLocation, data, name, this);
     }
 
-    public PictureBox.Builder pictureBox(String name, GuiTexture texture, String part)
-    {
+    public PictureBox.Builder pictureBox(String name, GuiTexture texture, String part) {
         return new PictureBox.Builder(texture, part, data, name, this);
     }
 
-    public HorizontalProgressBar.Builder horizontalBar(String name, GuiTexture texture, String part)
-    {
+    public HorizontalProgressBar.Builder horizontalBar(String name, GuiTexture texture, String part) {
         return new HorizontalProgressBar.Builder(texture, part, data, name, this);
     }
 
-    public VerticalProgressBar.Builder verticalBar(String name, GuiTexture texture, String part)
-    {
+    public VerticalProgressBar.Builder verticalBar(String name, GuiTexture texture, String part) {
         return new VerticalProgressBar.Builder(texture, part, data, name, this);
     }
 
-    public Button.Builder button(String name, String text)
-    {
+    public Button.Builder button(String name, String text) {
         return new Button.Builder(text, data, name, this);
     }
 
-    public Label.Builder label(String name, String text)
-    {
+    public Label.Builder label(String name, String text) {
         return new Label.Builder(text, data, name, this);
     }
 
-    public static class Builder<S extends Control> extends ControlBuilder<ControlContainer<S>>
-    {
+    public static class Builder<S extends Control> extends ControlBuilder<ControlContainer<S>> {
         private final ResourceLocation dataLocation;
 
-        public Builder(ResourceLocation dataLocation, GuiData data, String name, ControlContainer parent)
-        {
+        public Builder(ResourceLocation dataLocation, GuiData data, String name, ControlContainer parent) {
             super(data, name, parent);
             this.dataLocation = dataLocation;
         }
 
         @Override
-        protected ControlContainer<S> createInstance()
-        {
+        protected ControlContainer<S> createInstance() {
             return new ControlContainer<>(dataLocation, anchor, parent);
         }
     }

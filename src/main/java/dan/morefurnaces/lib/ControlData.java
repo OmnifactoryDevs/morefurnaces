@@ -1,7 +1,6 @@
 package dan.morefurnaces.lib;
 
-public class ControlData
-{
+public class ControlData {
     private Integer width = null;
     private Integer height = null;
 
@@ -20,16 +19,21 @@ public class ControlData
     private Boolean sameSideTop = null;
     private Boolean sameSideBottom = null;
 
-    /** Overrides left and right. Sets both to 0 */
+    /**
+     * Overrides left and right. Sets both to 0
+     */
     private Boolean centerHor = null;
-    /** Overrides top and bottom. Sets both to 0 */
+    /**
+     * Overrides top and bottom. Sets both to 0
+     */
     private Boolean centerVert = null;
 
-    /** Overrides centerHor and centerVert. Sets both to true */
+    /**
+     * Overrides centerHor and centerVert. Sets both to true
+     */
     private Boolean center = null;
 
-    public void apply(Anchor anchor, ControlContainer parent, IControlProvider provider)
-    {
+    public void apply(Anchor anchor, ControlContainer parent, IControlProvider provider) {
         if (center != null && center)
             centerHor = centerVert = true;
 
@@ -43,33 +47,28 @@ public class ControlData
         if (height != null)
             anchor.height(height);
 
-        if (left != null)
-        {
+        if (left != null) {
             Control c = cleft == null ? parent : provider.getControl(cleft);
             anchor.left(c, left, c == parent || (sameSideLeft != null && sameSideLeft));
         }
 
-        if (right != null)
-        {
+        if (right != null) {
             Control c = cright == null ? parent : provider.getControl(cright);
             anchor.right(c, right, c == parent || (sameSideRight != null && sameSideRight));
         }
 
-        if (top != null)
-        {
+        if (top != null) {
             Control c = ctop == null ? parent : provider.getControl(ctop);
             anchor.top(c, top, c == parent || (sameSideTop != null && sameSideTop));
         }
 
-        if (bottom != null)
-        {
+        if (bottom != null) {
             Control c = cbottom == null ? parent : provider.getControl(cbottom);
             anchor.bottom(c, bottom, c == parent || (sameSideBottom != null && sameSideBottom));
         }
     }
 
-    void claimChildValues(ControlData data)
-    {
+    void claimChildValues(ControlData data) {
         if (data.width != null)
             width = data.width;
         if (data.height != null)
@@ -101,8 +100,7 @@ public class ControlData
     }
 
     @Override
-    protected ControlData clone()
-    {
+    protected ControlData clone() {
         ControlData data = new ControlData();
         data.width = width;
         data.height = height;

@@ -2,32 +2,27 @@ package dan.morefurnaces.lib;
 
 import net.minecraft.client.renderer.GlStateManager;
 
-public class Label extends Control
-{
+public class Label extends Control {
     protected String text;
     protected int color = 0xff000000;
     protected boolean centered;
     private String[] lines;
 
-    public Label(String text, Anchor anchor, ControlContainer parent)
-    {
+    public Label(String text, Anchor anchor, ControlContainer parent) {
         super(anchor, parent);
         setText(text);
     }
 
-    public Label setCentered()
-    {
+    public Label setCentered() {
         centered = true;
         return this;
     }
 
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
-    public void setText(String value)
-    {
+    public void setText(String value) {
         text = value;
         if (text != null)
             lines = text.split("\n");
@@ -35,8 +30,7 @@ public class Label extends Control
             lines = new String[0];
 
         int width = 0;
-        for (int i = 0; i < lines.length; i++)
-        {
+        for (int i = 0; i < lines.length; i++) {
             int w = mc.fontRenderer.getStringWidth(lines[i]);
             if (w > width)
                 width = w;
@@ -48,36 +42,29 @@ public class Label extends Control
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float partialTicks)
-    {
-        for (int i = 0; i < lines.length; i++)
-        {
+    public void draw(int mouseX, int mouseY, float partialTicks) {
+        for (int i = 0; i < lines.length; i++) {
             GlStateManager.color(1f, 1f, 1f, 1f);
 
             int y = getY() + i * 13;
-            if (centered)
-            {
+            if (centered) {
                 mc.fontRenderer.drawString(lines[i], getX() + (getWidth() - mc.fontRenderer.getStringWidth(text)) / 2, y, color);
-            } else
-            {
+            } else {
                 mc.fontRenderer.drawString(lines[i], getX(), y, color);
             }
         }
     }
 
-    public static class Builder extends ControlBuilder<Label>
-    {
+    public static class Builder extends ControlBuilder<Label> {
         private final String text;
 
-        public Builder(String text, GuiData data, String name, ControlContainer parent)
-        {
+        public Builder(String text, GuiData data, String name, ControlContainer parent) {
             super(data, name, parent);
             this.text = text;
         }
 
         @Override
-        protected Label createInstance()
-        {
+        protected Label createInstance() {
             return new Label(text, anchor, parent);
         }
     }

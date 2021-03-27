@@ -2,8 +2,7 @@ package dan.morefurnaces.lib;
 
 import org.lwjgl.util.Rectangle;
 
-public class Anchor
-{
+public class Anchor {
     private int width;
     private int height;
 
@@ -34,162 +33,132 @@ public class Anchor
     private Control controlTop = null;
     private Control controlBottom = null;
 
-    public Anchor left(Control c, int dist, boolean sameSide)
-    {
+    public Anchor left(Control c, int dist, boolean sameSide) {
         controlLeft = c;
         distanceLeft = dist;
         sameSideLeft = sameSide;
         return this;
     }
 
-    public Anchor right(Control c, int dist, boolean sameSide)
-    {
+    public Anchor right(Control c, int dist, boolean sameSide) {
         controlRight = c;
         distanceRight = dist;
         sameSideRight = sameSide;
         return this;
     }
 
-    public Anchor top(Control c, int dist, boolean sameSide)
-    {
+    public Anchor top(Control c, int dist, boolean sameSide) {
         controlTop = c;
         distanceTop = dist;
         sameSideTop = sameSide;
         return this;
     }
 
-    public Anchor bottom(Control c, int dist, boolean sameSide)
-    {
+    public Anchor bottom(Control c, int dist, boolean sameSide) {
         controlBottom = c;
         distanceBottom = dist;
         sameSideBottom = sameSide;
         return this;
     }
 
-    public Anchor size(int w, int h)
-    {
+    public Anchor size(int w, int h) {
         width = w;
         height = h;
         return this;
     }
 
-    public Anchor width(int w)
-    {
+    public Anchor width(int w) {
         width = w;
         return this;
     }
 
-    public Anchor height(int h)
-    {
+    public Anchor height(int h) {
         height = h;
         return this;
     }
 
-    public Anchor centerHorIn(Control c)
-    {
+    public Anchor centerHorIn(Control c) {
         return left(c, 0, true).right(c, 0, true);
     }
 
-    public Anchor centerVertIn(Control c)
-    {
+    public Anchor centerVertIn(Control c) {
         return top(c, 0, true).bottom(c, 0, true);
     }
 
-    public Anchor centerHorBetween(Control left, Control right)
-    {
+    public Anchor centerHorBetween(Control left, Control right) {
         return left(left, 0, false).right(right, 0, false);
     }
 
-    public Anchor centerVertBetween(Control top, Control bottom)
-    {
+    public Anchor centerVertBetween(Control top, Control bottom) {
         return top(top, 0, false).bottom(bottom, 0, false);
     }
 
-    public Rectangle apply()
-    {
+    public Rectangle apply() {
         int x = 0;
         int y = 0;
         int w = width;
         int h = height;
 
-        if (left() && right())
-        {
-            if (w > 0)
-            {
+        if (left() && right()) {
+            if (w > 0) {
                 int actW = (getAnchorRight() - distanceRight) - (getAnchorLeft() + distanceLeft);
                 x = getAnchorLeft() + distanceLeft + (actW - w) / 2;
-            } else
-            {
+            } else {
                 x = getAnchorLeft() + distanceLeft;
                 w = getAnchorRight() - distanceRight - x;
             }
-        } else if (left())
-        {
+        } else if (left()) {
             x = getAnchorLeft() + distanceLeft;
-        } else if (right())
-        {
+        } else if (right()) {
             x = getAnchorRight() - distanceRight - w;
         }
 
-        if (top() && bottom())
-        {
-            if (h > 0)
-            {
+        if (top() && bottom()) {
+            if (h > 0) {
                 int actH = (getAnchorBottom() - distanceBottom) - (getAnchorTop() + distanceTop);
                 y = getAnchorTop() + distanceTop + (actH - h) / 2;
-            } else
-            {
+            } else {
                 y = getAnchorTop() + distanceTop;
                 h = getAnchorBottom() - distanceBottom - y;
             }
-        } else if (top())
-        {
+        } else if (top()) {
             y = getAnchorTop() + distanceTop;
-        } else if (bottom())
-        {
+        } else if (bottom()) {
             y = getAnchorBottom() - distanceBottom - h;
         }
 
         return new Rectangle(x, y, w, h);
     }
 
-    private boolean left()
-    {
+    private boolean left() {
         return controlLeft != null;
     }
 
-    private boolean right()
-    {
+    private boolean right() {
         return controlRight != null;
     }
 
-    private boolean top()
-    {
+    private boolean top() {
         return controlTop != null;
     }
 
-    private boolean bottom()
-    {
+    private boolean bottom() {
         return controlBottom != null;
     }
 
-    public int getAnchorLeft()
-    {
+    public int getAnchorLeft() {
         return controlLeft.getBounds().getX() + (sameSideLeft ? 0 : controlLeft.getBounds().getWidth());
     }
 
-    public int getAnchorRight()
-    {
+    public int getAnchorRight() {
         return controlRight.getBounds().getX() + (sameSideRight ? controlRight.getBounds().getWidth() : 0);
     }
 
-    public int getAnchorTop()
-    {
+    public int getAnchorTop() {
         return controlTop.getBounds().getY() + (sameSideTop ? 0 : controlTop.getBounds().getHeight());
     }
 
-    public int getAnchorBottom()
-    {
+    public int getAnchorBottom() {
         return controlBottom.getBounds().getY() + (sameSideBottom ? controlBottom.getBounds().getHeight() : 0);
     }
 }

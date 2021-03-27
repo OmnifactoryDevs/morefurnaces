@@ -15,35 +15,28 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-public class ClientUtil
-{
+public class ClientUtil {
     private static final Map<ResourceLocation, GuiData> guiCache = Maps.newHashMap();
 
-    public static String readResource(ResourceLocation location)
-    {
+    public static String readResource(ResourceLocation location) {
         String ret = null;
 
         InputStream is = null;
-        try
-        {
+        try {
             is = Minecraft.getMinecraft().getResourceManager().getResource(location).getInputStream();
             ret = IOUtils.toString(is, Charsets.UTF_8);
 
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
-        } finally
-        {
+        } finally {
             IOUtils.closeQuietly(is);
         }
 
         return ret;
     }
 
-    public static GuiData loadGuiData(ResourceLocation location, boolean useCache)
-    {
-        if (useCache && guiCache.containsKey(location))
-        {
+    public static GuiData loadGuiData(ResourceLocation location, boolean useCache) {
+        if (useCache && guiCache.containsKey(location)) {
             return guiCache.get(location);
         }
 
@@ -56,9 +49,9 @@ public class ClientUtil
     private static final JsonDeserializer<Map<String, SlotData[]>> SlotDataArrayMapDeserializer = (json, typeOfT, context) ->
     {
         Map<String, SlotData[]> map = Maps.newHashMap();
-        for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet())
-        {
-            map.put(entry.getKey(), context.deserialize(entry.getValue(), new TypeToken<SlotData[]>() {}.getType()));
+        for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
+            map.put(entry.getKey(), context.deserialize(entry.getValue(), new TypeToken<SlotData[]>() {
+            }.getType()));
         }
         return map;
     };
@@ -66,15 +59,17 @@ public class ClientUtil
     private static final JsonDeserializer<Map<String, ControlData>> ControlDataMapDeserializer = (json, typeOfT, context) ->
     {
         Map<String, ControlData> map = Maps.newHashMap();
-        for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet())
-        {
-            map.put(entry.getKey(), context.deserialize(entry.getValue(), new TypeToken<ControlData>() {}.getType()));
+        for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
+            map.put(entry.getKey(), context.deserialize(entry.getValue(), new TypeToken<ControlData>() {
+            }.getType()));
         }
         return map;
     };
 
     public static final Gson gson = new GsonBuilder().setPrettyPrinting()
-            .registerTypeAdapter(new TypeToken<Map<String, SlotData[]>>() {}.getType(), SlotDataArrayMapDeserializer)
-            .registerTypeAdapter(new TypeToken<Map<String, ControlData>>() {}.getType(), ControlDataMapDeserializer)
+            .registerTypeAdapter(new TypeToken<Map<String, SlotData[]>>() {
+            }.getType(), SlotDataArrayMapDeserializer)
+            .registerTypeAdapter(new TypeToken<Map<String, ControlData>>() {
+            }.getType(), ControlDataMapDeserializer)
             .create();
 }

@@ -1,15 +1,13 @@
 package dan.morefurnaces.lib;
 
-public class SlotData implements Cloneable<SlotData>
-{
+public class SlotData implements Cloneable<SlotData> {
     private int from;
     private int to;
     private int rows = 1;
     private int x;
     private int y;
 
-    public boolean apply(SlotControl.Builder builder)
-    {
+    public boolean apply(SlotControl.Builder builder) {
         int index = builder.slot.getSlotIndex();
 
         int minIndex = Math.min(from, to);
@@ -43,8 +41,7 @@ public class SlotData implements Cloneable<SlotData>
     }
 
     @Override
-    public SlotData clone()
-    {
+    public SlotData clone() {
         SlotData data = new SlotData();
         data.from = from;
         data.to = to;
